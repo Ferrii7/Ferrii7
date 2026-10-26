@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" role="img" aria-label="Terminal: about Ferrii">
+<style>
+.ln{animation:in .35s ease-out both}
+.cur{animation:blink 1s steps(1) infinite}
+@keyframes in{from{opacity:0}to{opacity:1}}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.ln{animation:none;opacity:1}}
+</style>
+<rect width="900" height="380" rx="14" fill="#06101e"/>
+<rect x=".75" y=".75" width="898.5" height="378.5" rx="13.5" fill="none" stroke="#22406a" stroke-width="1.5"/>
+<rect width="900" height="44" rx="14" fill="#0f2440"/><rect y="30" width="900" height="14" fill="#0f2440"/>
+<circle cx="26" cy="22" r="6.5" fill="#e5484d"/><circle cx="48" cy="22" r="6.5" fill="#f2b632"/><circle cx="70" cy="22" r="6.5" fill="#46a758"/>
+<text x="450.0" y="27" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" fill="#7fb3e8">ferrii@sbh: ~</text>
+<g font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace" font-size="16"><g class="ln" style="animation-delay:0.40s"><text x="32" y="92"><tspan fill="#f2b632">$</tspan> <tspan fill="#f4efe4">whoami</tspan></text></g><g class="ln" style="animation-delay:0.90s"><text x="32" y="114" fill="#a9b6c8">ferrii · solo founder &amp; developer of SecureBusinessHub</text></g><g class="ln" style="animation-delay:1.50s"><text x="32" y="146"><tspan fill="#f2b632">$</tspan> <tspan fill="#f4efe4">cat mission.txt</tspan></text></g><g class="ln" style="animation-delay:2.00s"><text x="32" y="168" fill="#a9b6c8">Security advice SMBs can actually act on. No jargon, no fear-selling.</text></g><g class="ln" style="animation-delay:2.60s"><text x="32" y="200"><tspan fill="#f2b632">$</tspan> <tspan fill="#f4efe4">sbh tools --list</tspan></text></g><g class="ln" style="animation-delay:3.10s"><text x="32" y="222" fill="#a9b6c8">spoofing · lookalikes · exposure · baseline · headers · breach-clock</text></g><g class="ln" style="animation-delay:3.70s"><text x="32" y="254"><tspan fill="#f2b632">$</tspan> <tspan fill="#f4efe4">sbh stack</tspan></text></g><g class="ln" style="animation-delay:4.20s"><text x="32" y="276" fill="#a9b6c8">React + TypeScript → Cloudflare Workers (edge SSR) · D1 · R2 · Bun</text></g><g class="ln" style="animation-delay:4.80s"><text x="32" y="308"><tspan fill="#f2b632">$</tspan> <tspan fill="#f4efe4">uptime --learning</tspan></text></g><g class="ln" style="animation-delay:5.30s"><text x="32" y="330" fill="#a9b6c8">ASIR degree, networks &amp; servers, heading toward offensive security</text></g><g class="ln" style="animation-delay:5.90s"><text x="32" y="362"><tspan fill="#f2b632">$</tspan> <tspan class="cur" fill="#f4efe4">▍</tspan></text></g></g>
+</svg>

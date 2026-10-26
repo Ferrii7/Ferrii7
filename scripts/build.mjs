@@ -87,8 +87,12 @@ class Doc {
 ${this.body.join("\n")}
 </svg>
 `;
-    fs.writeFileSync(`${OUT}/${name}`, svg);
-    console.log(`${name.padEnd(28)} ${(svg.length / 1024).toFixed(1)} KB`);
+    // A content hash in the filename gives every change a new URL, so GitHub's image
+    // cache can't keep serving the old art.
+    const file = name.replace(/\.svg$/, `.${crypto.createHash("sha1").update(svg).digest("hex").slice(0, 8)}.svg`);
+    fs.writeFileSync(`${OUT}/${file}`, svg);
+    WRITTEN.set(name, file);
+    console.log(`${file.padEnd(36)} ${(svg.length / 1024).toFixed(1)} KB`);
   }
 }
 
@@ -656,6 +660,8 @@ async function guide(gd, i) {
   await d.write(`guides/${gd.file}.svg`);
 }
 
+const WRITTEN = new Map();
+fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(`${OUT}/nav`, { recursive: true });
 fs.mkdirSync(`${OUT}/guides`, { recursive: true });
 await banner();
@@ -668,3 +674,11 @@ await log();
 await constellation();
 await stack();
 for (const [i, g] of GUIDES.entries()) await guide(g, i);
+
+// Point the README at the freshly hashed files.
+const readme = fs.readFileSync("README.md", "utf8").replace(/\.\/assets\/([\w/-]+?)(?:\.[0-9a-f]{8})?\.svg/g, (m, base) => {
+  const file = WRITTEN.get(`${base}.svg`);
+  if (!file) throw new Error(`README links ${m}, which the build no longer makes`);
+  return `./assets/${file}`;
+});
+fs.writeFileSync("README.md", readme);

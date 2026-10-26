@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 133 40" width="133" height="40" role="img" aria-label="GLOSSARY">
+<style>@font-face{font-family:sbh-cap;font-weight:600;src:url(data:font/woff2;base64,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) format("woff2")}
+.f-cap{font-family:sbh-cap,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:600}
+.tw{animation:tw 6s ease-in-out infinite}
+.up{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+.draw{stroke-dasharray:100;animation:draw 1.8s ease-out both}
+.pk{stroke-dasharray:6 200;animation:pk 3.4s linear infinite}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-out infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.28}}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes pk{from{stroke-dashoffset:6}to{stroke-dashoffset:-100}}
+@keyframes pulse{0%{transform:scale(1);opacity:.9}75%,100%{transform:scale(3.4);opacity:0}}
+@keyframes drift{from{transform:translate(0,0) rotate(0)}to{transform:translate(-14px,6px) rotate(24deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.pk{display:none}}</style>
+<defs></defs>
+<rect x=".5" y=".5" width="132" height="39" rx="3" fill="#0A0E12" stroke="rgba(201,143,44,.5)" stroke-opacity="1"/>
+<path d="M23 15Q23.9 19.1 28 20Q23.9 20.9 23 25Q22.1 20.9 18 20Q22.1 19.1 23 15Z" fill="#C98F2C"/>
+<text class="f-cap" x="40" y="24.3" font-size="12" letter-spacing="1.3" fill="#F2F0EB">GLOSSARY</text>
+
+</svg>

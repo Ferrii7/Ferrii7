@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143 40" width="143" height="40" role="img" aria-label="FREE TOOLS">
+<style>@font-face{font-family:sbh-cap;font-weight:600;src:url(data:font/woff2;base64,d09GMgABAAAAAAVUABAAAAAACdQAAAT3AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgXQcbgZgP1NUQVRaAFQRCAqFXIRjCxYAATYCJAMoBCAFhHQHIAwHGy0IyAQC/tu0ectCNssGqkLVSUVfVaPnMSJ+QOqi9FSRiqX9uvOa7g/3S/1HFdZFB3pK/97//S5z0WE3HQXgjWZVVIHDYQmPFLeoW2UmnjlwXMxEAAZCRUGwGOW+HHS6kozap9+QeBqmj/PmUy3L68lDhvxUf2EWtTn739CGeLlAyfN4C6lE0DEibaAQw1Wi0RBQOqyhkNh3pp8UorA23MsMYEBOZb7c3nxUs/srsxdmYTQDB0VJu4qFQ9tcoCQUuO6GSBR0QJQ6YKWEmFpcWFJABb+bcIxMwxpVqIYtBWrCdhRbovPMGqZqqNZeSvLMK6zt1B+B9X6Q8iOHlC01rJbx1qr3UMxybDM39eZRcUPjCOAiPirwrhxot5WVILaUd6ofW3+jJE4YM0B/rOAubI5SVOwbLzrid47JyvYLgcjxp+YLiUJdKmGDv1MRPa8pRvuEW0mGlhOdwNKXyY4Kpc4KqEg0LvJaFRf9GMJw4s0V11z0TRGjbjD/MC+aZ8xT5ok+G4zpAmGaOAnqrqSCUB4TNwuiU5uEWsdeI329UPhZuqoaNl21GYZuK1OmitpOG+eY4BxLjNCThIH9fSXGEq8Lf6mOXdjRRWJNlsQUVGewCFSeLmXU6fYJZXEoTpuLf0e1T4jRnIybf/+GmHbzgX1B6XWmXruXuCASEdPCYX1+MMjUUMg+wbkgFGJqMKgbIqbiUV1z5sbkFMwPhxNjQqGQvewPiYnhsJgWidgXhEIJxgCWvgmh0JdPEOUxNCO6x7StR9HuHa09FyllJDy5p5TXIlOQ9LgSmBowryAJTJVSTg0EekyR8p7cak6Rga3Zq1NcMkVO6XFPyqlbr9BOuTRlKb2/OIXVWH/7pvTS8nl35m29Wppcdr70yJX8O/nx3JfZHy4vpY2s8EXsqeMJ/z88nhh76ovP3aeOJz78/3ii++Rn/447Pzbnz30Hcv48P3bc+Avjcv/cvy/3jwvjOv4LWhz4Y8yY8OLFY3/969ODi2/neaZ07FYwbES34qldMl8+6pKzo37xDrZWOvQub8mP1uVRtqFxWfPaxifPjh2cIjv3GjzWPaL83mbnW/1ydfPMRV8+zd+45b+C2VeVCZboT1Znj4sf21Ymdeo+ZLi/1eX59UaV39BzYsbAJakzZn31uhCr+2Hp9tLvH9offoPuUem1tPW8h584uz7VLFpR7/3Rc5b6yze9DL79oMJ+7cEdTyo96Ld23Ir+l8Fnvgr7tZ/PC3WrFAPUa6xWT7Janc1qW0OyrPix1VY3n1gHEKc0BEWdfbrOTAyKv0CbDDpddXD4XWXUaL6xVLSPvYIaoppXwSEMr4W23GhW671W2rPTa6MGcz0O2jNqlhAY9MNeN2Vo7+1IFWp5O6FRySsx0LHnO/3oKIooIJVCBuInlXxySKcNborxM9yFHJTe5iKOHMbjIQ4PBZy+F0WDGSThwcNZZOO3F/spxkdnWnFXF1GMh0IyKaKQ0KND7mYfHlpShJcsBpa39uClxciYWCb4KPR+rws3LWlNa9rQhSxy8NOC9makmw6k05q0TS1OfxRxDCWOLnOQmMSHZ1FCPql4W0V3YW9AwjjKAq65aDuP2P67fiDZeHD1vmkEXorIxUN6y1pPSo4JgLf24aLxkdGglmdTQhotSb8ibNVysAAfrTA7Mjb5lsfE/d6d4hDG1LPCnHVUXQQAAAA=) format("woff2")}
+.f-cap{font-family:sbh-cap,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:600}
+.tw{animation:tw 6s ease-in-out infinite}
+.up{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+.draw{stroke-dasharray:100;animation:draw 1.8s ease-out both}
+.pk{stroke-dasharray:6 200;animation:pk 3.4s linear infinite}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-out infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.28}}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes pk{from{stroke-dashoffset:6}to{stroke-dashoffset:-100}}
+@keyframes pulse{0%{transform:scale(1);opacity:.9}75%,100%{transform:scale(3.4);opacity:0}}
+@keyframes drift{from{transform:translate(0,0) rotate(0)}to{transform:translate(-14px,6px) rotate(24deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.pk{display:none}}</style>
+<defs></defs>
+<rect x=".5" y=".5" width="142" height="39" rx="3" fill="#0A0E12" stroke="rgba(201,143,44,.5)" stroke-opacity="1"/>
+<path d="M23 15Q23.9 19.1 28 20Q23.9 20.9 23 25Q22.1 20.9 18 20Q22.1 19.1 23 15Z" fill="#C98F2C"/>
+<text class="f-cap" x="40" y="24.3" font-size="12" letter-spacing="1.3" fill="#F2F0EB">FREE TOOLS</text>
+
+</svg>

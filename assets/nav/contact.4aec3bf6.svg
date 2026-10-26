@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125 40" width="125" height="40" role="img" aria-label="CONTACT">
+<style>@font-face{font-family:sbh-cap;font-weight:600;src:url(data:font/woff2;base64,d09GMgABAAAAAAU0ABAAAAAACVwAAATYAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgVgcbgZgP1NUQVRaAFQRCAqFDIQ3CxIAATYCJAMgBCAFhHQHIAwHG90HyAQCyqnNypKjyIqL5KMQOinQBrlIDsI1dsk9Qi6wC7/jGA8YdXCpmmzQ6BoU0Ch97i/zssbqWpaCFTil2pjTa61IAQtsPcwzKOjUV02P14YRgIkUUxA8af7jwWARq1BLymqWkbjVO9DF9NYBTyeSdG0e6vGjdrf8N7QsnStQOj0DPUwm5JwQLRKyvko8OgJqGzoKRazbWkcNGhq0aD1rBcICs61a0RnArD766pZdELKVUgqqADHUu2yQ5IlIFHLCEDtJ6TNL6esZ7mbikO9yTohbbylMx54D3WWHuyquzAoQ1lWtSFm1pbiWp27ReQfRUl7laeXeBJptusXqhyjWeO63AD27qbm2mQAulsUF/h8P+nvKTSDurc+pG7RRymAyF/DrsNNEf3o6Sm/foE/Mwy/c3to2JASifWhzl5AonM1k7KeyVhGFd2GiZeFWVkELiPlg8cYsk0KtdCIqkszbOlbFRSHF1LPM2jDmeHUnWF9YAeuEtc96nmWZNSgQlsUYQrrPHWsfhzlnQiK1D6nEZdwnYKj4GkNVTbuh2k2nmjhz7Fjd69wxZoQEYawUJo41SoJtmSH02QYO4cAQK1r8rMhBsw+bxJax1qx/m2NHgtf0Rd5e4QjFlo2sFePwXvHx22LvO584rgyHw8vNSCQSMa4IhfCHw44ro9HoyoRQKBRi+bPnw+HlRiQSEXEJXrMjEomscITDYVTmX330Fv7YhyuujEbF3jF+fIeYgKmb8Uv33vcc+ofPzbkMKWU0srtQylh0D5KlJwL+gHUCScAvpfQHAkv3SPmhvM/aIwP3Fa/Y5JKb5J6lH0rpv+/EHu5fc92m66SUfZvIdV082nxW6eh5Y2+0J25vzswNzMs51ZB9zuBYm93oi46LkjN24pm8fc8v//GnF1a4953yhUoeuajzxDhvglm0xLO+bPjcYt9RX8fXjz/Z+dXR7SPFw+duKFva4ih0Oju2HX7w6lg9t6CNZrry8n8u99fec96m2fZm4zn1nrnOMWijWW98nFZWe/nqp5f6ErWu+FP227M+JUdOPJO/74XlP/70wor8fWdOu/e9sOKnH19Y4X7p1PfewyPtXz/+ZPvXh0e8viPejq+feLzjqyNeNPdPHz3w0cs/OX7iqZ6uUvR+6lV3bhyz6Dfd9vqUPj7/0uvCuXf/Ffpv7cQn9E+erVthwPdnu5OG/gr9PjjxCf3X8hldk6JCGyVX+4xW+wRusSfSqlXQrCSikKIuOlHnIkz63vJlFubjTp55R3xqvJi6ThSkSsFMMV2p4BSm0kYub4+q7UqNAh5S2pnJZQonBTRNEAKTMqx0M5YC5TymMls5H53JSomJYS8UroImeulmMz1UMiTc1EU7W8nBTR9D1AtQgtqZLpppx4eHXu2hm3aK6KWLbazEgxuttDHkzhyij0EWkCUc3UsfHnpooZcegpND6eRBPGTSywCtVNaP9zBAxsS0os4+SIH5pS7cZJJNNjkspJV2hsigwDZ0M5etZLNlRY/db6KZWppZuASDGbx5K8N0sZmBXsZdVAzI7qUWwAkXucs4Cr7RG9KGBxfzSQ0M0EsHHrb2TBQyfE4AfPwgLpLPDEHNbWOYLWSy9Y4oq2etm0GysGViSvkum+T1/t/H01j9B4V18XPq1QAA) format("woff2")}
+.f-cap{font-family:sbh-cap,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:600}
+.tw{animation:tw 6s ease-in-out infinite}
+.up{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+.draw{stroke-dasharray:100;animation:draw 1.8s ease-out both}
+.pk{stroke-dasharray:6 200;animation:pk 3.4s linear infinite}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-out infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.28}}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes pk{from{stroke-dashoffset:6}to{stroke-dashoffset:-100}}
+@keyframes pulse{0%{transform:scale(1);opacity:.9}75%,100%{transform:scale(3.4);opacity:0}}
+@keyframes drift{from{transform:translate(0,0) rotate(0)}to{transform:translate(-14px,6px) rotate(24deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.pk{display:none}}</style>
+<defs></defs>
+<rect x=".5" y=".5" width="124" height="39" rx="3" fill="#0A0E12" stroke="rgba(201,143,44,.5)" stroke-opacity="1"/>
+<path d="M23 15Q23.9 19.1 28 20Q23.9 20.9 23 25Q22.1 20.9 18 20Q22.1 19.1 23 15Z" fill="#C98F2C"/>
+<text class="f-cap" x="40" y="24.3" font-size="12" letter-spacing="1.3" fill="#F2F0EB">CONTACT</text>
+
+</svg>

@@ -9,6 +9,7 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 import { geoOrthographic, geoPath, geoGraticule, geoInterpolate, geoDistance, geoContains } from "d3-geo";
 import { feature, mesh } from "topojson-client";
+import { create } from "fontkit";
 
 const OUT = "assets";
 const CACHE = ".cache/fonts";
@@ -22,12 +23,10 @@ const INK = (a) => `rgba(242,240,235,${a})`;
 
 const FONTS = {
   serif: { spec: (o) => `Fraunces:opsz,wght@${o},600`, family: "sbh-serif", weight: 600, stack: "Georgia,'Times New Roman',serif" },
-  mono: { spec: () => "IBM+Plex+Mono:wght@500", family: "sbh-mono", weight: 500, stack: "ui-monospace,Menlo,Consolas,monospace" },
+  cap: { spec: () => "Inter:wght@600", family: "sbh-cap", weight: 600, stack: "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" },
   sans: { spec: () => "Inter:wght@400", family: "sbh-sans", weight: 400, stack: "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" },
   sansb: { spec: () => "Inter:wght@600", family: "sbh-sansb", weight: 600, stack: "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" },
 };
-// IBM Plex Mono advances every glyph 0.6em, so mono text can be measured exactly.
-const monoW = (s, size, ls) => s.length * (size * 0.6 + ls) - ls;
 
 const rng = (seed) => () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
 const n1 = (v) => Math.round(v * 10) / 10;
@@ -50,9 +49,8 @@ const BASE_CSS = `
 @keyframes drift{from{transform:translate(0,0) rotate(0)}to{transform:translate(-14px,6px) rotate(24deg)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.pk{display:none}}`;
 
-async function fontFace(key, text, opsz) {
-  const f = FONTS[key];
-  const spec = f.spec(opsz);
+async function fontFile(key, text, opsz) {
+  const spec = FONTS[key].spec(opsz);
   const chars = [...new Set(text + " ")].sort().join("");
   const file = `${CACHE}/${crypto.createHash("sha1").update(spec + chars).digest("hex").slice(0, 16)}.woff2`;
   if (!fs.existsSync(file)) {
@@ -62,10 +60,19 @@ async function fontFace(key, text, opsz) {
     fs.mkdirSync(CACHE, { recursive: true });
     fs.writeFileSync(file, Buffer.from(await (await fetch(url)).arrayBuffer()));
   }
-  const b64 = fs.readFileSync(file).toString("base64");
+  return fs.readFileSync(file);
+}
+
+async function fontFace(key, text, opsz) {
+  const f = FONTS[key];
+  const b64 = (await fontFile(key, text, opsz)).toString("base64");
   return `@font-face{font-family:${f.family};font-weight:${f.weight};src:url(data:font/woff2;base64,${b64}) format("woff2")}
 .f-${key}{font-family:${f.family},${f.stack};font-weight:${f.weight}}`;
 }
+
+// Label widths come from the real Inter SemiBold advances (no kerning, which caps barely use).
+const METRICS = create(await fontFile("cap", Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i)).join("") + "·°"));
+const capW = (s, size, ls) => (METRICS.layout(s).advanceWidth / METRICS.unitsPerEm) * size + ls * (s.length - 1);
 
 // One SVG document. `t()` writes text and records its glyphs for the font subset.
 class Doc {
@@ -149,7 +156,7 @@ const brackets = (w, h, i, l, a = 0.7) =>
 // The SBH eyebrow: a short amber rule, then spaced mono caps.
 const eyebrow = (d, x, y, str, size = 12) =>
   `<line x1="${x}" y1="${y - size * 0.36}" x2="${x + 26}" y2="${y - size * 0.36}" stroke="${C.gold}" stroke-opacity=".6"/>` +
-  d.t("mono", x + 38, y, size, str.toUpperCase(), `letter-spacing="${n1(size * 0.24)}" fill="${C.gold}"`);
+  d.t("cap", x + 38, y, size, str.toUpperCase(), `letter-spacing="${n1(size * 0.16)}" fill="${C.gold}"`);
 
 // Rock texture shared by the moon, meteorites and planets.
 function rockDefs(d) {
@@ -294,8 +301,8 @@ async function banner() {
   const meta = ["CATALONIA, ES", "ASIR · CYBERSECURITY", "SECUREBUSINESSHUB.COM"];
   let mx = 72;
   const metaRow = meta.map((s, i) => {
-    const out = d.t("mono", mx, 384, 14, s, `letter-spacing="2" fill="${INK(0.55)}"`) + (i < meta.length - 1 ? sparkle(mx + monoW(s, 14, 2) + 20, 379, 4.5) : "");
-    mx += monoW(s, 14, 2) + 40;
+    const out = d.t("cap", mx, 384, 14, s, `letter-spacing="1.1" fill="${INK(0.55)}"`) + (i < meta.length - 1 ? sparkle(mx + capW(s, 14, 1.1) + 20, 379, 4.5) : "");
+    mx += capW(s, 14, 1.1) + 40;
     return out;
   }).join("");
 
@@ -316,9 +323,9 @@ async function banner() {
     `<circle class="home" cx="${n1(hx)}" cy="${n1(hy)}" r="4" fill="none" stroke="${C.goldL}" stroke-width="1.4"/>`,
     `<circle cx="${n1(hx)}" cy="${n1(hy)}" r="3.4" fill="${C.goldL}" stroke="${C.space}" stroke-width="1"/>`,
     `<path d="M${n1(hx + 5)} ${n1(hy - 5)}L${n1(hx + 34)} ${n1(hy - 34)}H${n1(hx + 48)}" fill="none" stroke="${C.goldL}" stroke-opacity=".7"/>`,
-    `<rect x="${n1(hx + 48)}" y="${n1(hy - 56)}" width="${n1(monoW("41.4°N 2.2°E", 10, 1.6) + 20)}" height="42" rx="2" fill="${C.space}" fill-opacity=".82" stroke="${C.goldL}" stroke-opacity=".45"/>`,
-    d.t("mono", hx + 58, hy - 37, 11, "CATALONIA", `letter-spacing="2.4" fill="${C.goldL}"`),
-    d.t("mono", hx + 58, hy - 22, 10, "41.4°N 2.2°E", `letter-spacing="1.6" fill="${INK(0.55)}"`),
+    `<rect x="${n1(hx + 48)}" y="${n1(hy - 56)}" width="${n1(capW("41.4°N 2.2°E", 10, 0.9) + 20)}" height="42" rx="2" fill="${C.space}" fill-opacity=".82" stroke="${C.goldL}" stroke-opacity=".45"/>`,
+    d.t("cap", hx + 58, hy - 37, 11, "CATALONIA", `letter-spacing="1.3" fill="${C.goldL}"`),
+    d.t("cap", hx + 58, hy - 22, 10, "41.4°N 2.2°E", `letter-spacing="0.9" fill="${INK(0.55)}"`),
     o1.front, o2.front,
     meteor(rnd, 676, 392, 8, 0), meteor(rnd, 1252, 236, 5, 3), meteor(rnd, 742, 120, 3.6, 6),
     `<rect width="${W}" height="${H}" fill="url(#vig)"/>`,
@@ -340,15 +347,15 @@ async function banner() {
 // ── link pills ──────────────────────────────────────────────────────────────
 
 async function pill(name, label, primary = false) {
-  const size = 12, ls = 2.4, h = 40;
-  const tw = monoW(label, size, ls);
+  const size = 12, ls = 1.3, h = 40;
+  const tw = capW(label, size, ls);
   const w = Math.ceil(18 + 10 + 12 + tw + 18 + (primary ? 20 : 0));
   const d = new Doc(w, h, label);
   const fg = primary ? C.space : C.ink;
   d.add(
     `<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="3" fill="${primary ? C.gold : C.ground}" stroke="${primary ? C.goldL : "rgba(201,143,44,.5)"}" stroke-opacity="${primary ? 0.6 : 1}"/>`,
     sparkle(23, h / 2, 5, primary ? C.space : C.gold),
-    d.t("mono", 40, h / 2 + size * 0.36, size, label, `letter-spacing="${ls}" fill="${fg}"`),
+    d.t("cap", 40, h / 2 + size * 0.36, size, label, `letter-spacing="${ls}" fill="${fg}"`),
     primary ? `<path d="M${w - 30} ${h / 2 + 4}l8-8m-6 0h6v6" fill="none" stroke="${fg}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>` : "",
   );
   await d.write(`nav/${name}.svg`);
@@ -386,7 +393,7 @@ async function log() {
       : s === "now" ? `<circle class="ring" cx="${tx}" cy="${y - 5}" r="4" fill="none" stroke="${C.goldL}"/><circle cx="${tx}" cy="${y - 5}" r="4.4" fill="${C.space}" stroke="${C.goldL}" stroke-width="1.6"/><circle cx="${tx}" cy="${y - 5}" r="1.8" fill="${C.goldL}"/>`
       : `<g class="tw">${sparkle(tx, y - 5, 8, C.goldL)}</g>`;
     return `<g class="up" style="animation-delay:${delay}s">${mark}` +
-      d.t("mono", 88, y, 11, k.toUpperCase(), `letter-spacing="2.4" fill="${s === "next" ? C.goldL : INK(0.5)}"`) +
+      d.t("cap", 88, y, 11, k.toUpperCase(), `letter-spacing="1.3" fill="${s === "next" ? C.goldL : INK(0.5)}"`) +
       d.t(s === "next" ? "sansb" : "sans", 210, y, 16, v, `fill="${s === "next" ? C.goldL : INK(0.9)}"`) + `</g>`;
   }).join("\n");
 
@@ -409,7 +416,7 @@ async function log() {
     `</g>`,
     `<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="13.5" fill="none" stroke="${INK(0.1)}" stroke-width="1.5"/>`,
     eyebrow(d, 40, 54, "Flight log"),
-    d.t("mono", W - 40, 54, 11, "FERRII · CATALONIA, ES", `text-anchor="end" letter-spacing="2.4" fill="${INK(0.45)}"`),
+    d.t("cap", W - 40, 54, 11, "FERRII · CATALONIA, ES", `text-anchor="end" letter-spacing="1.3" fill="${INK(0.45)}"`),
     `<line x1="40" y1="78" x2="${W - 40}" y2="78" stroke="${INK(0.08)}"/>`,
     // trajectory: flown (solid), current leg (thin), still ahead (dashed)
     `<line x1="${tx}" y1="${top - 5}" x2="${tx}" y2="${now}" stroke="${C.gold}" stroke-opacity=".55" stroke-width="1.5" pathLength="100" class="draw" style="animation-delay:.2s"/>`,
@@ -423,7 +430,15 @@ async function log() {
 
 async function constellation() {
   const W = 900, H = 330;
-  const d = new Doc(W, H, "SecureBusinessHub's six free tools, drawn as a constellation", { opsz: 72 });
+  const d = new Doc(W, H, "SecureBusinessHub's six free tools, drawn as a constellation", {
+    opsz: 72,
+    css: `.ping,.flare{opacity:0;transform-box:fill-box;transform-origin:center;animation:ping 9s ease-out infinite}
+.flare{animation-name:flare}
+.pan{animation:pan 34s ease-in-out infinite alternate}
+@keyframes ping{0%{opacity:.95;transform:scale(.6)}12%{opacity:0;transform:scale(3.2)}100%{opacity:0}}
+@keyframes flare{0%{opacity:1}16%,100%{opacity:0}}
+@keyframes pan{from{transform:translate(0,0)}to{transform:translate(-22px,8px)}}`,
+  });
   const rnd = rng(606);
   skyDefs(d);
   d.def(`<clipPath id="frame"><rect width="${W}" height="${H}" rx="14"/></clipPath>
@@ -438,21 +453,33 @@ async function constellation() {
     [660, 262, "BREACH CLOCK", 0, 30, "middle"],
   ];
   const E = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 2]];
+  // One path through every edge in order. The pulse's head reaches a star at
+  // time T * (share of the path walked so far), so each flare is scheduled from that.
+  const route = [0, 1, 2, 3, 4, 5, 2], T = 9, START = 2.6;
+  let walked = 0;
+  const at = route.map((k, i) => (i ? (walked += Math.hypot(S[k][0] - S[route[i - 1]][0], S[k][1] - S[route[i - 1]][1])) : 0));
+  const pulsePath = "M" + route.map((k) => `${S[k][0]} ${S[k][1]}`).join("L");
+  const pulse = `<path d="${pulsePath}" pathLength="100" class="pk" style="animation-duration:${T}s;animation-delay:${START}s" fill="none" stroke="${C.goldL}" stroke-width="2.4" stroke-linecap="round"/>`;
+  const flares = route.map((k, i) => {
+    const delay = n1(START + (T * (at[i] / walked) * 100) / 106);
+    return `<circle class="flare" style="animation-delay:${delay}s" cx="${S[k][0]}" cy="${S[k][1]}" r="16" fill="url(#glg)"/>` +
+      `<circle class="ping" style="animation-delay:${delay}s" cx="${S[k][0]}" cy="${S[k][1]}" r="5" fill="none" stroke="${C.goldL}" stroke-width="1.2"/>`;
+  }).join("");
   const lines = E.map(([a, b], i) =>
     `<line x1="${S[a][0]}" y1="${S[a][1]}" x2="${S[b][0]}" y2="${S[b][1]}" pathLength="100" class="draw" style="animation-delay:${n1(0.4 + i * 0.25)}s" stroke="${C.ice}" stroke-opacity=".4" stroke-width="1"/>`).join("");
   const stars = S.map(([x, y, label, dx, dy, anchor], i) =>
     spike(x, y, 2.3, 40, n1(i * 0.9), 5 + (i % 3)) +
-    d.t("mono", x + dx, y + dy, 10, `0${i + 1}`, `text-anchor="${anchor}" letter-spacing="2" fill="${C.gold}" dy="-13"`) +
-    d.t("mono", x + dx, y + dy, 11, label, `text-anchor="${anchor}" letter-spacing="2" fill="${INK(0.82)}"`)).join("\n");
+    d.t("cap", x + dx, y + dy, 10, `0${i + 1}`, `text-anchor="${anchor}" letter-spacing="1.1" fill="${C.gold}" dy="-13"`) +
+    d.t("cap", x + dx, y + dy, 11, label, `text-anchor="${anchor}" letter-spacing="1.1" fill="${INK(0.82)}"`)).join("\n");
 
   d.add(
     `<g clip-path="url(#frame)">`,
     `<rect width="${W}" height="${H}" fill="${C.space}"/>`,
     nebula(d, "n1", { cx: 680, cy: 170, rx: 300, ry: 190, rgb: [58, 90, 140], a: 0.8, freq: 0.006, seed: 12 }),
     nebula(d, "n2", { cx: 860, cy: 300, rx: 200, ry: 120, rgb: [120, 96, 150], a: 0.3, freq: 0.008, seed: 3 }),
-    starfield(rnd, W, H, 260, { minA: 0.15 }),
+    `<g class="pan">${starfield(rnd, W, H, 290, { minA: 0.15, box: [-30, -30, W + 30, H + 30] })}</g>`,
     `<rect width="${W}" height="${H}" fill="url(#fade)"/>`,
-    lines, stars,
+    lines, flares, pulse, stars,
     `</g>`,
     `<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="13.5" fill="none" stroke="${INK(0.1)}" stroke-width="1.5"/>`,
     eyebrow(d, 40, 62, "securebusinesshub.com"),
@@ -460,12 +487,12 @@ async function constellation() {
     d.t("sans", 40, 170, 16, "Security guides and free checks for", `fill="${INK(0.74)}"`),
     d.t("sans", 40, 194, 16, "businesses with no security team.", `fill="${INK(0.74)}"`),
     d.t("serif", 38, 262, 40, "6", `fill="${C.gold}"`),
-    d.t("mono", 72, 248, 10, "FREE TOOLS", `letter-spacing="2" fill="${INK(0.55)}"`),
-    d.t("mono", 72, 263, 10, "NO SIGN-UP", `letter-spacing="2" fill="${INK(0.55)}"`),
+    d.t("cap", 72, 248, 10, "FREE TOOLS", `letter-spacing="1.1" fill="${INK(0.55)}"`),
+    d.t("cap", 72, 263, 10, "NO SIGN-UP", `letter-spacing="1.1" fill="${INK(0.55)}"`),
     `<line x1="186" y1="232" x2="186" y2="268" stroke="${INK(0.14)}"/>`,
     d.t("serif", 208, 262, 40, "228", `fill="${C.gold}"`),
-    d.t("mono", 290, 248, 10, "GLOSSARY", `letter-spacing="2" fill="${INK(0.55)}"`),
-    d.t("mono", 290, 263, 10, "TERMS", `letter-spacing="2" fill="${INK(0.55)}"`),
+    d.t("cap", 290, 248, 10, "GLOSSARY", `letter-spacing="1.1" fill="${INK(0.55)}"`),
+    d.t("cap", 290, 263, 10, "TERMS", `letter-spacing="1.1" fill="${INK(0.55)}"`),
   );
   await d.write("sbh.svg");
 }
@@ -506,7 +533,7 @@ async function stack() {
     const lx = side === "right" ? x + 26 : x, anchor = side === "right" ? "start" : "middle";
     const ly = side === "right" ? y - 3 : y + 38;
     return `<circle cx="${x}" cy="${y}" r="22" fill="url(#glw)"/><circle cx="${x}" cy="${y}" r="10" fill="url(#node)"/><circle cx="${x}" cy="${y}" r="10" fill="none" stroke="${C.ice}" stroke-opacity=".5"/>` +
-      d.t("mono", lx, ly, 11, title, `text-anchor="${anchor}" letter-spacing="2.2" fill="${C.ink}"`) +
+      d.t("cap", lx, ly, 11, title, `text-anchor="${anchor}" letter-spacing="1.2" fill="${C.ink}"`) +
       d.t("sans", lx, ly + 18, 13, note, `text-anchor="${anchor}" fill="${INK(0.6)}"`);
   }).join("\n");
 
@@ -526,7 +553,7 @@ async function stack() {
     `<ellipse cx="${hx}" cy="${hy}" rx="44" ry="13" transform="rotate(-18 ${hx} ${hy})" fill="none" stroke="${C.goldL}" stroke-opacity=".45" stroke-dasharray="2 4"/>`,
     `<circle cx="${hx}" cy="${hy}" r="17" fill="url(#hub)"/>`,
     `<g transform="translate(${hx} ${hy}) rotate(-18)"><circle r="2.4" fill="#fff"><animateMotion dur="9s" repeatCount="indefinite" path="M-44 0A44 13 0 1 1 44 0A44 13 0 1 1 -44 0"/></circle></g>`,
-    d.t("mono", hx - 30, hy - 66, 11, "CLOUDFLARE WORKER", `text-anchor="end" letter-spacing="2.2" fill="${C.goldL}"`),
+    d.t("cap", hx - 30, hy - 66, 11, "CLOUDFLARE WORKER", `text-anchor="end" letter-spacing="1.2" fill="${C.goldL}"`),
     d.t("sans", hx - 30, hy - 48, 13, "renders every page", `text-anchor="end" fill="${INK(0.6)}"`),
     d.t("sans", hx - 30, hy - 31, 13, "with HTMLRewriter", `text-anchor="end" fill="${INK(0.6)}"`),
     nodes,
@@ -624,7 +651,7 @@ async function guide(gd, i) {
     const face = ic.segs.filter(([a, b]) => a < 12 && b < 12);
     icon = face.map(seg).join("") + P.slice(0, 12).map((p, k) => dot(p, k, k % 3 === 0)).join("") +
       seg([c, h2], 13) + `<g class="hand">${seg([c, h1], 12)}${dot(P[h1], 1)}</g>` + dot(P[c], 0, true) +
-      d.t("mono", ox, oy + 30, 13, "72H", `text-anchor="middle" letter-spacing="2" fill="${C.goldL}"`);
+      d.t("cap", ox, oy + 30, 13, "72H", `text-anchor="middle" letter-spacing="1.1" fill="${C.goldL}"`);
   } else {
     const [s0, s1] = ic.anim || [0, 0];
     const moving = ic.segs.filter(([a, b]) => a >= s0 && b < s1 && b >= s0);
@@ -635,7 +662,7 @@ async function guide(gd, i) {
     icon = ic.cls === "bait" ? `<g class="bait">${shape}</g>` : shape;
     if (ic.ghost) icon = `<g class="ghost" opacity=".32">${ic.segs.map(([a, b]) => `<line x1="${n1(P[a][0])}" y1="${n1(P[a][1])}" x2="${n1(P[b][0])}" y2="${n1(P[b][1])}" stroke="${C.ice}" stroke-dasharray="3 4"/>`).join("")}</g>` + icon;
   }
-  if (gd.stamp) icon += `<g class="stamp"><rect x="${ox - 44}" y="${oy + 6}" width="88" height="28" rx="3" fill="${C.space}" fill-opacity=".6" stroke="${C.danger}" stroke-width="2.2"/>${d.t("mono", ox, oy + 26, 15, "DENIED", `text-anchor="middle" letter-spacing="3" fill="${C.danger}"`)}</g>`;
+  if (gd.stamp) icon += `<g class="stamp"><rect x="${ox - 44}" y="${oy + 6}" width="88" height="28" rx="3" fill="${C.space}" fill-opacity=".6" stroke="${C.danger}" stroke-width="2.2"/>${d.t("cap", ox, oy + 26, 15, "DENIED", `text-anchor="middle" letter-spacing="1.7" fill="${C.danger}"`)}</g>`;
 
   d.add(
     `<g clip-path="url(#frame)">`,

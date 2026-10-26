@@ -25,16 +25,16 @@
   <img alt="SecureBusinessHub at a glance" src="./assets/sbh-card.svg" width="100%">
 </a>
 
-**[SecureBusinessHub](https://securebusinesshub.com)** is an independent cybersecurity publication for small and medium businesses. I run it solo: the writing, the design, the code and the deploys. The idea is simple. Most security content is either written for enterprise SOC teams or written to sell you something. SBH is neither: evergreen guides an owner can read on a Tuesday and act on by Friday, plus free tools that answer one question each.
+[SecureBusinessHub](https://securebusinesshub.com) is an independent cybersecurity publication for small and medium businesses. I write the articles, build the site and deploy it myself. Most security writing out there targets enterprise SOC teams or is trying to sell you a product. SBH is aimed at the ten-person company with no security team: guides an owner can get through in an afternoon, and free tools that each answer one specific question.
 
 | Tool | What it tells you |
 | :--- | :--- |
-| [Email Spoofing Check](https://securebusinesshub.com/tools/email-spoofing-check) | Whether your SPF, DKIM and DMARC actually stop someone sending as you |
+| [Email Spoofing Check](https://securebusinesshub.com/tools/email-spoofing-check) | Whether your SPF, DKIM and DMARC stop someone from sending email as you |
 | [Lookalike-Domain Finder](https://securebusinesshub.com/tools/lookalike-domain-finder) | Which near-copies of your domain are already registered |
-| [Website Exposure Check](https://securebusinesshub.com/tools/website-exposure-check) | Security headers, certificate and cookie flags at a glance |
-| [Security Baseline Check](https://securebusinesshub.com/tools/security-baseline-check) | Your email and web setup against a [published baseline](https://securebusinesshub.com/tools/security-baseline-check/methodology), with a badge that gets re-checked weekly |
-| [Email Header Analyzer](https://securebusinesshub.com/tools/email-header-analyzer) | Paste the headers of a suspicious email, get a verdict. Runs in your browser |
-| [Breach-Notification Clock](https://securebusinesshub.com/tools/breach-notification-deadline-calculator) | When your GDPR 72-hour window actually closes |
+| [Website Exposure Check](https://securebusinesshub.com/tools/website-exposure-check) | How your site's security headers, certificate and cookie flags look from outside |
+| [Security Baseline Check](https://securebusinesshub.com/tools/security-baseline-check) | How your email and web setup compare to a [published baseline](https://securebusinesshub.com/tools/security-baseline-check/methodology). A pass earns a badge that gets re-checked every week |
+| [Email Header Analyzer](https://securebusinesshub.com/tools/email-header-analyzer) | Whether a suspicious email is what it claims to be. You paste the headers and the analysis runs in your browser |
+| [Breach-Notification Clock](https://securebusinesshub.com/tools/breach-notification-deadline-calculator) | The exact moment your GDPR 72-hour notification window closes |
 
 ## ◆ Under the hood
 
@@ -42,24 +42,24 @@
   <img alt="Stack" src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,cloudflare,workers,bun,sqlite,git&theme=dark">
 </p>
 
-- **Frontend:** Vite + React + TypeScript, editorial design system (Fraunces / Inter / JetBrains Mono)
-- **Edge:** Cloudflare Workers with server-side rendering through `HTMLRewriter`, so crawlers get real HTML
-- **Data:** D1 for content, R2 for downloads, Stripe Checkout with token-gated delivery for the kit
-- **Search:** Pagefind, client-side, no third-party search box
+The front end is Vite, React and TypeScript with Tailwind, set in Fraunces, Inter and JetBrains Mono. Pages are rendered on Cloudflare Workers through `HTMLRewriter`, so search engines get real HTML instead of an empty shell. Content lives in D1 and downloads in R2. The Starter Kit sells through Stripe Checkout, and buyers get their files through a download token. Site search is Pagefind, running client-side.
 
 <p>
   <img alt="Systems" src="https://skillicons.dev/icons?i=linux,windows,bash,powershell&theme=dark">
 </p>
 
-Outside SBH I'm finishing a higher vocational degree in **Systems Administration & Networks (ASIR)** with a cybersecurity focus: Cisco, VLANs and routing, Linux and Windows Server, databases. The plan from here is offensive security.
+Outside SBH I'm finishing a higher vocational degree in Systems Administration and Networks (ASIR) with a cybersecurity focus, which covers Cisco, VLANs and routing, Linux and Windows Server, and databases. After that I want to move into offensive security.
 
 ## ◆ Worth reading on SBH
 
-- [SME Ransomware Survival Guide](https://securebusinesshub.com/article/sme-ransomware-survival-guide)
-- [Why Cyber Insurance Claims Get Denied](https://securebusinesshub.com/article/cyber-insurance-denied-sme)
-- [Defending Against Deepfake Fraud](https://securebusinesshub.com/article/deepfake-fraud-sme-defense)
-- [GDPR Compliance Guide](https://securebusinesshub.com/article/gdpr-compliance-guide)
-- [Anti-Social Engineering](https://securebusinesshub.com/article/anti-social-engineering)
+<p align="center">
+  <a href="https://securebusinesshub.com/article/sme-ransomware-survival-guide"><img alt="SME Ransomware Survival Guide" src="./assets/guides/01-ransomware.svg" width="49%"></a>
+  <a href="https://securebusinesshub.com/article/cyber-insurance-denied-sme"><img alt="Why Cyber Insurance Claims Get Denied" src="./assets/guides/02-insurance.svg" width="49%"></a>
+  <a href="https://securebusinesshub.com/article/deepfake-fraud-sme-defense"><img alt="Defending Against Deepfake Fraud" src="./assets/guides/03-deepfake.svg" width="49%"></a>
+  <a href="https://securebusinesshub.com/article/gdpr-compliance-guide"><img alt="GDPR Compliance Guide" src="./assets/guides/04-gdpr.svg" width="49%"></a>
+  <a href="https://securebusinesshub.com/article/anti-social-engineering"><img alt="Anti-Social Engineering" src="./assets/guides/05-social.svg" width="49%"></a>
+  <a href="https://securebusinesshub.com/article/shadow-it-remote-work-risks"><img alt="Shadow IT and Remote Work Risks" src="./assets/guides/06-shadowit.svg" width="49%"></a>
+</p>
 
 → [All guides](https://securebusinesshub.com/guides) · [Free Defense Toolkit](https://securebusinesshub.com/toolkit) · [Run the free security assessment](https://securebusinesshub.com/assessment)
 

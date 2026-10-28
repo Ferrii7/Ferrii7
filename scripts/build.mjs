@@ -365,7 +365,7 @@ async function pill(name, label, primary = false) {
 
 // Who SBH is written for, and the three rules the guides and tools follow.
 async function why() {
-  const W = 900, H = 386;
+  const W = 900, H = 362;
   const d = new Doc(W, H, "Who SecureBusinessHub is for, and the three rules its guides and tools follow");
   const rnd = rng(77);
   skyDefs(d); rockDefs(d);
@@ -385,9 +385,8 @@ async function why() {
   const cols = rules.map(([title, body], i) => {
     const x = 40 + i * cw;
     return `<g class="up" style="animation-delay:${n1(0.7 + i * 0.15)}s">` +
-      d.t("cap", x, top, 11, `0${i + 1}`, `letter-spacing="1.3" fill="${C.gold}"`) +
-      d.t("sansb", x, top + 30, 17, title, `fill="${C.ink}"`) +
-      body.map((l, j) => d.t("sans", x, top + 58 + j * 22, 14.5, l, `fill="${INK(0.62)}"`)).join("") + `</g>`;
+      d.t("sansb", x, top + 6, 17, title, `fill="${C.ink}"`) +
+      body.map((l, j) => d.t("sans", x, top + 34 + j * 22, 14.5, l, `fill="${INK(0.62)}"`)).join("") + `</g>`;
   }).join("\n");
 
   const ring = (a, extra = "") => `<ellipse cx="${P.x}" cy="${ry}" rx="${P.r * 1.75}" ry="${P.r * 0.3}" transform="rotate(-12 ${P.x} ${ry})" fill="none" stroke="${C.goldL}" stroke-opacity="${a}" stroke-width="4"${extra}/>`;

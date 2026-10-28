@@ -12,7 +12,7 @@
   <a href="https://securebusinesshub.com/contact"><img alt="Contact" src="./assets/nav/contact.4aec3bf6.svg" height="38"></a>
 </p>
 
-<img alt="Flight log. Role: solo founder and developer of SecureBusinessHub. Readers: small businesses where security is somebody's side job. Shipped: 6 free security tools, a 228-term glossary, the Starter Kit. Runs on: React and TypeScript on Cloudflare Workers, D1 and R2. Studying: ASIR degree, cybersecurity track. Speaks: Català, Español, English. Next: offensive security." src="./assets/log.965f012d.svg" width="100%">
+<img alt="Profile. Role: founder and developer, SecureBusinessHub. Audience: small and medium businesses without a dedicated security team. Shipped: 6 free security tools, a 228-term glossary, the Starter Kit. Stack: React, TypeScript, Cloudflare Workers, D1, R2. Education: ASIR, cybersecurity track: Cisco, Linux, Windows Server. Focus next: offensive security. Languages: Català, Español, English." src="./assets/profile.ed36989f.svg" width="100%">
 
 ## What I'm building
 

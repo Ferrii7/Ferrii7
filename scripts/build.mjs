@@ -361,69 +361,34 @@ async function pill(name, label, primary = false) {
   await d.write(`nav/${name}.svg`);
 }
 
-// ── flight log ──────────────────────────────────────────────────────────────
+// ── profile ─────────────────────────────────────────────────────────────────
 
-async function log() {
-  const W = 900, H = 440;
-  const d = new Doc(W, H, "Flight log: Ferran Fabra's role, what has shipped so far, and what comes next", {
-    css: `.ring{transform-box:fill-box;transform-origin:center;animation:pulse 2.6s ease-out infinite}`,
-  });
-  const rnd = rng(77);
-  skyDefs(d); rockDefs(d);
-  d.def(`<clipPath id="frame"><rect width="${W}" height="${H}" rx="14"/></clipPath>
-<radialGradient id="pl" cx=".7" cy=".26" r=".9"><stop offset="0" stop-color="#6F8FBF"/><stop offset=".45" stop-color="#2C4268"/><stop offset=".9" stop-color="#0C1420"/></radialGradient>
-<linearGradient id="fade" x1="0" x2="1"><stop offset=".45" stop-color="#030508" stop-opacity=".7"/><stop offset=".8" stop-color="#030508" stop-opacity="0"/></linearGradient>
-<clipPath id="pdisc"><circle cx="806" cy="${H + 6}" r="92"/></clipPath>
-<clipPath id="pfront"><rect x="0" y="${H - 34}" width="${W}" height="200" transform="rotate(-12 806 ${H - 20})"/></clipPath>`);
-
+// A plain fact sheet: flat panel, hairline rows, no sky and no motion.
+async function profile() {
   const rows = [
-    ["Role", "Solo founder and developer of SecureBusinessHub", "done"],
-    ["Readers", "Small businesses where security is somebody's side job", "done"],
-    ["Shipped", "6 free security tools, a 228-term glossary, the Starter Kit", "done"],
-    ["Runs on", "React and TypeScript on Cloudflare Workers, D1 and R2", "done"],
-    ["Studying", "ASIR degree, cybersecurity track: Cisco, Linux, Windows Server", "now"],
-    ["Speaks", "Català, Español, English", "done"],
-    ["Next", "Offensive security", "next"],
+    ["Role", "Founder and developer, SecureBusinessHub"],
+    ["Audience", "Small and medium businesses without a dedicated security team"],
+    ["Shipped", "6 free security tools, a 228-term glossary, the Starter Kit"],
+    ["Stack", "React, TypeScript, Cloudflare Workers, D1, R2"],
+    ["Education", "ASIR, cybersecurity track: Cisco, Linux, Windows Server"],
+    ["Focus next", "Offensive security"],
+    ["Languages", "Català, Español, English"],
   ];
-  const top = 122, gap = 42, tx = 58;
-  const marks = rows.map(([k, v, s], i) => {
-    const y = top + i * gap, delay = n1(0.3 + i * 0.22);
-    const mark =
-      s === "done" ? `<circle cx="${tx}" cy="${y - 5}" r="8" fill="url(#glg)"/><circle cx="${tx}" cy="${y - 5}" r="3.6" fill="${C.gold}"/>`
-      : s === "now" ? `<circle class="ring" cx="${tx}" cy="${y - 5}" r="4" fill="none" stroke="${C.goldL}"/><circle cx="${tx}" cy="${y - 5}" r="4.4" fill="${C.space}" stroke="${C.goldL}" stroke-width="1.6"/><circle cx="${tx}" cy="${y - 5}" r="1.8" fill="${C.goldL}"/>`
-      : `<g class="tw">${sparkle(tx, y - 5, 8, C.goldL)}</g>`;
-    return `<g class="up" style="animation-delay:${delay}s">${mark}` +
-      d.t("cap", 88, y, 11, k.toUpperCase(), `letter-spacing="1.3" fill="${s === "next" ? C.goldL : INK(0.5)}"`) +
-      d.t(s === "next" ? "sansb" : "sans", 210, y, 16, v, `fill="${s === "next" ? C.goldL : INK(0.9)}"`) + `</g>`;
-  }).join("\n");
-
-  const now = top + 4 * gap - 5, nxt = top + 6 * gap - 5;
-  const P = { x: 806, y: H + 6, r: 92 };
+  const W = 900, head = 64, rowH = 46, H = head + rows.length * rowH + 12;
+  const d = new Doc(W, H, "Profile: Ferran Fabra's role, audience, what has shipped, stack, education and languages");
   d.add(
-    `<g clip-path="url(#frame)">`,
-    `<rect width="${W}" height="${H}" fill="${C.space}"/>`,
-    nebula(d, "n1", { cx: 760, cy: 160, rx: 300, ry: 200, rgb: [58, 90, 140], a: 0.6, freq: 0.006, seed: 5 }),
-    starfield(rnd, W, H, 190, { minA: 0.15 }),
-    spike(842, 110, 1.8, 34, 0.5), spike(560, 404, 1.2, 0, 2), spike(724, 70, 1.3, 22, 3.3),
-    // destination planet, rings behind and in front
-    `<ellipse cx="${P.x}" cy="${P.y - 14}" rx="${P.r * 1.75}" ry="${P.r * 0.3}" transform="rotate(-12 ${P.x} ${P.y - 14})" fill="none" stroke="${C.goldL}" stroke-opacity=".22" stroke-width="5"/>`,
-    `<circle cx="${P.x}" cy="${P.y}" r="${P.r}" fill="url(#pl)"/>`,
-    `<g clip-path="url(#pdisc)" transform="rotate(-12 ${P.x} ${P.y})">${[-62, -40, -22, -6, 14].map((dy, i) => `<ellipse cx="${P.x}" cy="${P.y + dy}" rx="${P.r * 1.3}" ry="${[5, 9, 4, 7, 10][i]}" fill="${i % 2 ? C.ice : "#0C1420"}" fill-opacity="${i % 2 ? 0.1 : 0.22}"/>`).join("")}</g>`,
-    `<circle cx="${P.x}" cy="${P.y}" r="${P.r - 1}" fill="none" stroke="${C.ice}" stroke-opacity=".35"/>`,
-    `<ellipse cx="${P.x}" cy="${P.y - 14}" rx="${P.r * 1.75}" ry="${P.r * 0.3}" transform="rotate(-12 ${P.x} ${P.y - 14})" fill="none" stroke="${C.goldL}" stroke-opacity=".5" stroke-width="5" clip-path="url(#pfront)"/>`,
-    meteor(rnd, 640, 66, 4.5, 1),
-    `<rect width="${W}" height="${H}" fill="url(#fade)"/>`,
-    `</g>`,
-    `<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="13.5" fill="none" stroke="${INK(0.1)}" stroke-width="1.5"/>`,
-    eyebrow(d, 40, 54, "Flight log"),
-    d.t("cap", W - 40, 54, 11, "FERRII · CATALONIA, ES", `text-anchor="end" letter-spacing="1.3" fill="${INK(0.45)}"`),
-    `<line x1="40" y1="78" x2="${W - 40}" y2="78" stroke="${INK(0.08)}"/>`,
-    // trajectory: flown (solid), current leg (thin), still ahead (dashed)
-    `<line x1="${tx}" y1="${top - 5}" x2="${tx}" y2="${now}" stroke="${C.gold}" stroke-opacity=".55" stroke-width="1.5" pathLength="100" class="draw" style="animation-delay:.2s"/>`,
-    `<line x1="${tx}" y1="${now}" x2="${tx}" y2="${nxt}" stroke="${C.goldL}" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="3 6"/>`,
-    marks,
+    `<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="6" fill="${C.ground}" stroke="${INK(0.12)}"/>`,
+    `<rect x="40" y="27" width="3" height="14" fill="${C.gold}"/>`,
+    d.t("cap", 54, 39, 12, "FERRAN FABRA", `letter-spacing="1.4" fill="${INK(0.92)}"`),
+    d.t("cap", W - 40, 39, 11, "CATALONIA, ES", `text-anchor="end" letter-spacing="1.3" fill="${INK(0.45)}"`),
+    ...rows.map(([k, v], i) => {
+      const y = head + i * rowH;
+      return `<line x1="40" y1="${y}" x2="${W - 40}" y2="${y}" stroke="${INK(i ? 0.07 : 0.14)}"/>` +
+        d.t("cap", 40, y + 28, 11, k.toUpperCase(), `letter-spacing="1.3" fill="${INK(0.45)}"`) +
+        d.t("sans", 200, y + 29, 16, v, `fill="${INK(0.9)}"`);
+    }),
   );
-  await d.write("log.svg");
+  await d.write("profile.svg");
 }
 
 // ── SBH tool constellation ──────────────────────────────────────────────────
@@ -697,7 +662,7 @@ await pill("tools", "FREE TOOLS");
 await pill("kit", "STARTER KIT");
 await pill("glossary", "GLOSSARY");
 await pill("contact", "CONTACT");
-await log();
+await profile();
 await constellation();
 await stack();
 for (const [i, g] of GUIDES.entries()) await guide(g, i);

@@ -361,34 +361,64 @@ async function pill(name, label, primary = false) {
   await d.write(`nav/${name}.svg`);
 }
 
-// ── profile ─────────────────────────────────────────────────────────────────
+// ── why SBH ─────────────────────────────────────────────────────────────────
 
-// A plain fact sheet: flat panel, hairline rows, no sky and no motion.
-async function profile() {
-  const rows = [
-    ["Role", "Founder and developer, SecureBusinessHub"],
-    ["Audience", "Small and medium businesses without a dedicated security team"],
-    ["Shipped", "6 free security tools, a 228-term glossary, the Starter Kit"],
-    ["Stack", "React, TypeScript, Cloudflare Workers, D1, R2"],
-    ["Education", "ASIR, cybersecurity track: Cisco, Linux, Windows Server"],
-    ["Focus next", "Offensive security"],
-    ["Languages", "Català, Español, English"],
+// Who SBH is written for, and the three rules the guides and tools follow.
+async function why() {
+  const W = 900, H = 386;
+  const d = new Doc(W, H, "Who SecureBusinessHub is for, and the three rules its guides and tools follow");
+  const rnd = rng(77);
+  skyDefs(d); rockDefs(d);
+  const P = { x: 812, y: 34, r: 74 }, ry = P.y + 10;
+  d.def(`<clipPath id="frame"><rect width="${W}" height="${H}" rx="14"/></clipPath>
+<radialGradient id="pl" cx=".3" cy=".75" r=".9"><stop offset="0" stop-color="#6F8FBF"/><stop offset=".45" stop-color="#2C4268"/><stop offset=".9" stop-color="#0C1420"/></radialGradient>
+<linearGradient id="fade" x1="0" x2="1"><stop offset=".4" stop-color="#030508" stop-opacity=".75"/><stop offset=".75" stop-color="#030508" stop-opacity="0"/></linearGradient>
+<clipPath id="pdisc"><circle cx="${P.x}" cy="${P.y}" r="${P.r}"/></clipPath>
+<clipPath id="pfront"><rect x="0" y="${ry}" width="${W}" height="200" transform="rotate(-12 ${P.x} ${ry})"/></clipPath>`);
+
+  const rules = [
+    ["Afternoon-sized guides", ["Each guide is short enough to read", "and act on in a single afternoon."]],
+    ["One tool, one question", ["Paste a domain or an email header", "and get a straight answer back."]],
+    ["Jargon gets explained", ["When a term can't be avoided, the", "228-term glossary spells it out."]],
   ];
-  const W = 900, head = 64, rowH = 46, H = head + rows.length * rowH + 12;
-  const d = new Doc(W, H, "Profile: Ferran Fabra's role, audience, what has shipped, stack, education and languages");
+  const cw = (W - 80) / 3, top = 268;
+  const cols = rules.map(([title, body], i) => {
+    const x = 40 + i * cw;
+    return `<g class="up" style="animation-delay:${n1(0.7 + i * 0.15)}s">` +
+      d.t("cap", x, top, 11, `0${i + 1}`, `letter-spacing="1.3" fill="${C.gold}"`) +
+      d.t("sansb", x, top + 30, 17, title, `fill="${C.ink}"`) +
+      body.map((l, j) => d.t("sans", x, top + 58 + j * 22, 14.5, l, `fill="${INK(0.62)}"`)).join("") + `</g>`;
+  }).join("\n");
+
+  const ring = (a, extra = "") => `<ellipse cx="${P.x}" cy="${ry}" rx="${P.r * 1.75}" ry="${P.r * 0.3}" transform="rotate(-12 ${P.x} ${ry})" fill="none" stroke="${C.goldL}" stroke-opacity="${a}" stroke-width="4"${extra}/>`;
   d.add(
-    `<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="6" fill="${C.ground}" stroke="${INK(0.12)}"/>`,
-    `<rect x="40" y="27" width="3" height="14" fill="${C.gold}"/>`,
-    d.t("cap", 54, 39, 12, "FERRAN FABRA", `letter-spacing="1.4" fill="${INK(0.92)}"`),
-    d.t("cap", W - 40, 39, 11, "CATALONIA, ES", `text-anchor="end" letter-spacing="1.3" fill="${INK(0.45)}"`),
-    ...rows.map(([k, v], i) => {
-      const y = head + i * rowH;
-      return `<line x1="40" y1="${y}" x2="${W - 40}" y2="${y}" stroke="${INK(i ? 0.07 : 0.14)}"/>` +
-        d.t("cap", 40, y + 28, 11, k.toUpperCase(), `letter-spacing="1.3" fill="${INK(0.45)}"`) +
-        d.t("sans", 200, y + 29, 16, v, `fill="${INK(0.9)}"`);
-    }),
+    `<g clip-path="url(#frame)">`,
+    `<rect width="${W}" height="${H}" fill="${C.space}"/>`,
+    nebula(d, "n1", { cx: 740, cy: 150, rx: 320, ry: 210, rgb: [58, 90, 140], a: 0.6, freq: 0.006, seed: 5 }),
+    starfield(rnd, W, H, 190, { minA: 0.15 }),
+    spike(668, 132, 1.6, 30, 0.5), spike(540, 40, 1.2, 0, 2), spike(858, 196, 1.3, 22, 3.3),
+    ring(0.22),
+    `<circle cx="${P.x}" cy="${P.y}" r="${P.r}" fill="url(#pl)"/>`,
+    `<g clip-path="url(#pdisc)" transform="rotate(-12 ${P.x} ${P.y})">${[-30, -12, 6, 24, 44].map((dy, i) => `<ellipse cx="${P.x}" cy="${P.y + dy}" rx="${P.r * 1.3}" ry="${[5, 8, 4, 7, 9][i]}" fill="${i % 2 ? C.ice : "#0C1420"}" fill-opacity="${i % 2 ? 0.1 : 0.22}"/>`).join("")}</g>`,
+    `<circle cx="${P.x}" cy="${P.y}" r="${P.r - 1}" fill="none" stroke="${C.ice}" stroke-opacity=".35"/>`,
+    ring(0.5, ` clip-path="url(#pfront)"`),
+    meteor(rnd, 610, 196, 4.5, 1),
+    `<rect width="${W}" height="${H}" fill="url(#fade)"/>`,
+    `</g>`,
+    `<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="13.5" fill="none" stroke="${INK(0.1)}" stroke-width="1.5"/>`,
+    `<g class="up" style="animation-delay:.1s">${eyebrow(d, 40, 56, "Who it's for")}</g>`,
+    `<g class="up" style="animation-delay:.25s">`,
+    d.t("serif", 38, 116, 38, "Security advice for whoever", `letter-spacing="-.8" fill="${C.ink}"`),
+    d.t("serif", 38, 160, 38, "ended up in charge of it.", `letter-spacing="-.8" fill="${C.ink}"`),
+    `</g>`,
+    `<g class="up" style="animation-delay:.45s">`,
+    d.t("sans", 40, 200, 16, "In a ten-person company that's the owner, the office manager,", `fill="${INK(0.7)}"`),
+    d.t("sans", 40, 223, 16, "or whoever happens to be good with computers.", `fill="${INK(0.7)}"`),
+    `</g>`,
+    `<line x1="40" y1="${top - 26}" x2="${W - 40}" y2="${top - 26}" stroke="${INK(0.1)}"/>`,
+    cols,
   );
-  await d.write("profile.svg");
+  await d.write("why.svg");
 }
 
 // ── SBH tool constellation ──────────────────────────────────────────────────
@@ -662,7 +692,7 @@ await pill("tools", "FREE TOOLS");
 await pill("kit", "STARTER KIT");
 await pill("glossary", "GLOSSARY");
 await pill("contact", "CONTACT");
-await profile();
+await why();
 await constellation();
 await stack();
 for (const [i, g] of GUIDES.entries()) await guide(g, i);

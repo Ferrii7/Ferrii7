@@ -12,7 +12,7 @@
   <a href="https://securebusinesshub.com/contact"><img alt="Contact" src="./assets/nav/contact.4aec3bf6.svg" height="38"></a>
 </p>
 
-<img alt="Profile. Role: founder and developer, SecureBusinessHub. Audience: small and medium businesses without a dedicated security team. Shipped: 6 free security tools, a 228-term glossary, the Starter Kit. Stack: React, TypeScript, Cloudflare Workers, D1, R2. Education: ASIR, cybersecurity track: Cisco, Linux, Windows Server. Focus next: offensive security. Languages: Català, Español, English." src="./assets/profile.ed36989f.svg" width="100%">
+<img alt="Who it's for: security advice for whoever ended up in charge of it. In a ten-person company that's the owner, the office manager, or whoever happens to be good with computers. Three rules: afternoon-sized guides you can read and act on in one sitting; one tool, one question, so you paste a domain or an email header and get a straight answer; and jargon gets explained, by a 228-term glossary." src="./assets/why.348d4f92.svg" width="100%">
 
 ## What I'm building
 

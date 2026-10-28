@@ -377,9 +377,9 @@ async function why() {
 <clipPath id="pfront"><rect x="0" y="${ry}" width="${W}" height="200" transform="rotate(-12 ${P.x} ${ry})"/></clipPath>`);
 
   const rules = [
-    ["Afternoon-sized guides", ["Each guide is short enough to read", "and act on in a single afternoon."]],
-    ["One tool, one question", ["Paste a domain or an email header", "and get a straight answer back."]],
-    ["Jargon gets explained", ["When a term can't be avoided, the", "228-term glossary spells it out."]],
+    ["Short enough to finish", ["Most guides take an afternoon,", "including the time to act on them."]],
+    ["Tools that answer one thing", ["Can someone send email as you?", "The spoofing check will tell you."]],
+    ["A glossary for the jargon", ["228 terms, written for people who", "never wanted to learn what DMARC is."]],
   ];
   const cw = (W - 80) / 3, top = 268;
   const cols = rules.map(([title, body], i) => {
@@ -409,11 +409,11 @@ async function why() {
     `<g class="up" style="animation-delay:.1s">${eyebrow(d, 40, 56, "Who it's for")}</g>`,
     `<g class="up" style="animation-delay:.25s">`,
     d.t("serif", 38, 116, 38, "Security advice for whoever", `letter-spacing="-.8" fill="${C.ink}"`),
-    d.t("serif", 38, 160, 38, "ended up in charge of it.", `letter-spacing="-.8" fill="${C.ink}"`),
+    d.t("serif", 38, 160, 38, "got stuck with it.", `letter-spacing="-.8" fill="${C.ink}"`),
     `</g>`,
     `<g class="up" style="animation-delay:.45s">`,
-    d.t("sans", 40, 200, 16, "In a ten-person company that's the owner, the office manager,", `fill="${INK(0.7)}"`),
-    d.t("sans", 40, 223, 16, "or whoever happens to be good with computers.", `fill="${INK(0.7)}"`),
+    d.t("sans", 40, 200, 16, "At a ten-person company that's usually the owner, or the one person", `fill="${INK(0.7)}"`),
+    d.t("sans", 40, 223, 16, "who knows where the router is.", `fill="${INK(0.7)}"`),
     `</g>`,
     `<line x1="40" y1="${top - 26}" x2="${W - 40}" y2="${top - 26}" stroke="${INK(0.1)}"/>`,
     cols,

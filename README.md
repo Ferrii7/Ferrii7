@@ -12,7 +12,7 @@
   <a href="https://securebusinesshub.com/contact"><img alt="Contact" src="./assets/nav/contact.4aec3bf6.svg" height="38"></a>
 </p>
 
-<img alt="Who it's for: security advice for whoever ended up in charge of it. In a ten-person company that's the owner, the office manager, or whoever happens to be good with computers. Three rules: afternoon-sized guides you can read and act on in one sitting; one tool, one question, so you paste a domain or an email header and get a straight answer; and jargon gets explained, by a 228-term glossary." src="./assets/why.348d4f92.svg" width="100%">
+<img alt="Who it's for: security advice for whoever got stuck with it. At a ten-person company that's usually the owner, or the one person who knows where the router is. Guides short enough to finish in an afternoon, including the time to act on them. Tools that answer one thing: can someone send email as you? The spoofing check will tell you. A 228-term glossary for people who never wanted to learn what DMARC is." src="./assets/why.d902e7a8.svg" width="100%">
 
 ## What I'm building
 

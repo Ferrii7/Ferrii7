@@ -12,7 +12,7 @@
   <a href="https://securebusinesshub.com/contact"><img alt="Contact" src="./assets/nav/contact.4aec3bf6.svg" height="38"></a>
 </p>
 
-<img alt="Profile. Role: founder and developer, SecureBusinessHub. Audience: small and medium businesses without a dedicated security team. Shipped: 6 free security tools, a 228-term glossary, the Starter Kit. Stack: React, TypeScript, Cloudflare Workers, D1, R2. Education: ASIR, cybersecurity track: Cisco, Linux, Windows Server. Focus next: offensive security. Languages: Català, Español, English." src="./assets/profile.ed36989f.svg" width="100%">
+<img alt="Who it's for: security advice for whoever got stuck with it. At a ten-person company that's usually the owner, or the one person who knows where the router is. Guides short enough to finish in an afternoon, including the time to act on them. Tools that answer one thing: can someone send email as you? The spoofing check will tell you. A 228-term glossary for people who never wanted to learn what DMARC is." src="./assets/why.46abfe24.svg" width="100%">
 
 ## What I'm building
 
